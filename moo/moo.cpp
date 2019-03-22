@@ -1,24 +1,32 @@
 #include <iostream>
-#include <string>
 using namespace std;
 
-void Generate(string word, int k)
+int len(int k)
 {
-    if(k - word.length() <= 0)
-    {
+    int x;
+    if (k == -1)
+        return 0;
+    x = len(k - 1);
+    return x + k + 3 + x;
+}
 
-    }
-
-    string copy = word;
-
-        
+char solve(int n, int k)
+{
+    if (n > len(k))
+        return solve(n, k + 1);
+    if (n <= len(k - 1))
+        return solve(n, k - 1);
+    n = n - len(k - 1);
+    if (n <= k + 3)
+        return (n == 1) ? 'm' : 'o';
+    n = n - (k + 3);
+    return solve(n, k - 1);
 }
 
 int main()
 {
-    int kLetter;
-    cin >> kLetter;
+    int n;
+    cin >> n;
 
-    Generate("moo",kLetter - 1);
-
+    cout << solve(n, 0) << endl;
 }
