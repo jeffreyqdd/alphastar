@@ -1,32 +1,25 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <set>
 using namespace std;
 
 int kBales, bale_size[21], total = 0, min_hay = 1000;
 
 int maxValue(vector<int> barn1)
 {
-    int largest = 0;
-
     if (barn1.empty())
-    {
-        //cout << "(max value is)" << bale_size[kBales - 1] << "-->";
         return bale_size[kBales - 1];
-    }
-
-    for (int i = 0, j = 0; i < kBales; i++)
+    for (int i = kBales - 1, j = barn1.size() - 1; i >= 0; i--)
     {
-        if (bale_size[i] == barn1[j])
+        if (barn1[j] == bale_size[i])
         {
-            j++;
+            j--;
             continue;
         }
-        largest = max(largest, bale_size[i]);
+        return bale_size[i];
     }
-    //cout << "(max value is)" << largest << "-->";
-    return largest;
+    //should not be here
+    return -1;
 }
 
 void search(vector<int> b1, int sum, int index)
@@ -38,7 +31,10 @@ void search(vector<int> b1, int sum, int index)
     if (sum >= maxValue(b1) && sum * 3 >= total)
     {
         //update
-        //cout << "1 ------------- " << sum << endl;
+        for (auto u : b1)
+            cout << u << " ";
+        cout << " --> ";
+        cout << "1 ------------- " << sum << endl;
         min_hay = min(min_hay, sum);
         return;
     }
